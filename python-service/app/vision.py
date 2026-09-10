@@ -16,8 +16,6 @@ Dos proveedores intercambiables via AI_PROVIDER en .env:
 """
 from __future__ import annotations
 
-import base64
-
 from .config import settings
 
 READ_NOTES_PROMPT = (
@@ -52,18 +50,19 @@ def _read_with_ollama(image_path: str) -> str:
 
 
 def _read_with_gemini(image_path: str) -> str:
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types
 
-    genai.configure(api_key=settings.GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-2.5-flash")
+    client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
     with open(image_path, "rb") as f:
         image_bytes = f.read()
 
-    response = model.generate_content(
-        [
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=[
             READ_NOTES_PROMPT,
-            {"mime_type": "image/jpeg", "data": base64.b64encode(image_bytes).decode()},
-        ]
+            types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
+        ],
     )
     return response.text.strip()

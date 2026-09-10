@@ -13,7 +13,7 @@ RealtimeSTT==0.3.104
 # --- Lectura de fotos (vision) ---
 Pillow==11.0.0
 ollama==0.4.4          # cliente para modelo local via Ollama
-google-generativeai==0.8.3   # cliente para Gemini API (free tier)
+google-genai==1.75.0    # cliente para Gemini API (free tier) - SDK actual, reemplaza al deprecado google-generativeai
 
 # --- Base de datos ---
 sqlalchemy==2.0.36

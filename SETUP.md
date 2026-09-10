@@ -72,6 +72,26 @@ RealtimeSTT) se instaló y probó sin problemas — ver sección de pruebas.
   `ollama pull llama3.1`) vs `AI_PROVIDER=gemini` (requiere una API key gratis
   de Google AI Studio).
 
+## 2026-09-10 (continuación) — API key de Gemini y bloqueo de red del sandbox
+
+- Se creó la API key gratis en Google AI Studio y se guardó en `.env`
+  (`AI_PROVIDER=gemini`, `GEMINI_API_KEY=...`). `.env` no se sube a git.
+- Se reemplazó el paquete `google-generativeai` (quedó deprecado/sin soporte)
+  por el SDK actual **`google-genai`**. `vision.py` y `minuta.py` ya usan la
+  API nueva (`genai.Client(...).models.generate_content(...)`).
+- ⚠️ **Este sandbox de pruebas en la nube bloquea por política de red las
+  llamadas a `generativelanguage.googleapis.com`** (se confirmó con el proxy
+  de salida: `403 — policy denial`). Esto es una restricción propia de este
+  contenedor de pruebas, no de tu PC — en tu máquina, sin ese proxy
+  corporativo de por medio, las llamadas a Gemini deberían funcionar
+  normalmente. Conclusión práctica: la prueba de `/read-photo` y
+  `/build-minuta` con `AI_PROVIDER=gemini` queda pendiente de correr en tu PC;
+  aquí solo se pudo dejar el código listo y verificado que compila/importa
+  bien.
+- Lo que SÍ se puede seguir probando en este sandbox sin restricciones: la
+  transcripción de audio con `faster-whisper` (`/transcribe`), porque corre
+  100% local sin salir a internet.
+
 ## Cómo levantar el servicio localmente
 ```
 cd python-service
