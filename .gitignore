@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.wav
+*.mp3
+*.m4a
+*.jpg
+*.jpeg
+*.png
+!python-service/tests/samples/.gitkeep
+python-service/models/
+postgres-data/
+*.db

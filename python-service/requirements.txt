@@ -1,0 +1,20 @@
+# --- Servicio web local (Flutter le habla a esto por localhost) ---
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.20
+python-dotenv==1.0.1
+pydantic==2.10.4
+
+# --- Transcripcion de audio ---
+faster-whisper==1.1.0
+# RealtimeSTT envuelve faster-whisper + VAD para escucha en vivo (requiere microfono real -> solo en tu PC)
+RealtimeSTT==0.3.104
+
+# --- Lectura de fotos (vision) ---
+Pillow==11.0.0
+ollama==0.4.4          # cliente para modelo local via Ollama
+google-generativeai==0.8.3   # cliente para Gemini API (free tier)
+
+# --- Base de datos ---
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.10

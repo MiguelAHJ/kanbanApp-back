@@ -1,0 +1,18 @@
+version: "3.9"
+
+# Postgres local, pensado para poder apuntar luego al mismo motor en el
+# servidor de la empresa cambiando solo las variables de conexión (.env),
+# sin migrar de motor de base de datos.
+services:
+  db:
+    image: postgres:16
+    container_name: issue-flow-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-issueflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-issueflow_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-issueflow}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
