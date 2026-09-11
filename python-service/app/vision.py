@@ -22,7 +22,11 @@ READ_NOTES_PROMPT = (
     "Esta es una foto de notas escritas a mano durante una reunion de trabajo. "
     "Transcribe fielmente todo el texto legible, punto por punto. "
     "Si alguna palabra es ilegible, marcala como [ilegible] en vez de adivinar. "
-    "No agregues interpretacion ni resumen, solo la transcripcion literal."
+    "No agregues interpretacion ni resumen, solo la transcripcion literal. "
+    "Responde en TEXTO PLANO unicamente: nada de LaTeX (no uses $...$ para "
+    "flechas u otros simbolos, escribe '->' en su lugar), nada de HTML "
+    "(nada de <br>, &nbsp;, etc.), y usa Markdown simple solo si la nota "
+    "tenia una tabla (con '|' y '-' basico)."
 )
 
 
@@ -59,7 +63,7 @@ def _read_with_gemini(image_path: str) -> str:
         image_bytes = f.read()
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-3.6-flash",
         contents=[
             READ_NOTES_PROMPT,
             types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),

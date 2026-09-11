@@ -92,6 +92,65 @@ RealtimeSTT) se instaló y probó sin problemas — ver sección de pruebas.
   transcripción de audio con `faster-whisper` (`/transcribe`), porque corre
   100% local sin salir a internet.
 
+## 2026-09-11 — Primeras pruebas en la PC de Miguel (Windows)
+
+- `python3` no funcionaba en Windows (alias de la Microsoft Store) — se resolvió
+  instalando Python vía el nuevo "Python install manager" (`python --version`
+  lo instaló solo, quedó en **Python 3.14.7**) y usando `python`/`python -m pip`
+  en vez de `python3`/`pip3`.
+- Al instalar `requirements.txt`, **`psycopg2-binary` falló al compilar**
+  (no hay wheel precompilado para Python 3.14 en Windows todavía, y falta
+  `pg_config` para compilar desde cero). Como la base de datos no se usa
+  todavía en nada de lo que se está probando, se comentaron `sqlalchemy` y
+  `psycopg2-binary` en `requirements.txt` — se retoman cuando se implemente
+  la capa de persistencia.
+- El resto de las dependencias (incluyendo `faster-whisper` y `RealtimeSTT`)
+  sí encontraron wheel para Python 3.14 sin problema.
+- **Conflicto de versiones**: `RealtimeSTT==0.3.104` exige `faster-whisper==1.1.1`
+  exacto, pero `requirements.txt` tenía fijado `1.1.0`. Se corrigió el pin a
+  `1.1.1` (verificado que no rompe nada del código en `transcription.py`).
+- **Python 3.14 resultó demasiado nuevo** para el stack de `RealtimeSTT`:
+  arrastra `torch` + `scipy==1.15.2`, y `scipy` no tiene wheel para 3.14 en
+  Windows — intenta compilar desde cero y necesita un compilador de C/C++
+  (Visual Studio Build Tools) que no está instalado. En vez de instalar ese
+  toolchain, se decidió usar **Python 3.12 en un entorno virtual dedicado**
+  solo para este proyecto:
+  ```
+  py install 3.12
+  py -3.12 -m venv .venv
+  .venv\Scripts\activate
+  python -m pip install --upgrade pip
+  python -m pip install -r requirements.txt
+  ```
+  Hay que activar el venv (`.venv\Scripts\activate`) cada vez que se abre una
+  terminal nueva para trabajar en el proyecto. `.venv/` ya está en
+  `.gitignore`, no se sube a git.
+- Con Python 3.12 en el venv, todos los wheels se resolvieron sin compilar
+  nada — confirma que 3.12 es la opción estable para este proyecto.
+- **Otro conflicto de versiones**: `ollama==0.4.4` exigía `httpx<0.28.0`, pero
+  `google-genai` exige `httpx>=0.28.1` — rangos incompatibles. Se subió el pin
+  a `ollama==0.6.2` (ya no fija un tope viejo de httpx), verificado que
+  resuelve sin conflicto junto con `google-genai==1.75.0`.
+
+## 2026-09-11 (continuación) — Primera prueba real de `/read-photo`
+
+- Se probó `/read-photo` desde `/docs` con la foto de notas a mano (apuntes de
+  Laravel: Seeders/Factories). Resultado: **500 Internal Server Error**.
+- El traceback real (visible en la terminal de `uvicorn`, no en la respuesta
+  HTTP) mostró que la llamada de red sí llegó a Gemini sin problema — el error
+  fue `404 NOT_FOUND: This model models/gemini-2.5-flash is no longer
+  available to new users`. Es decir, el modelo que estaba fijado en el código
+  ya no está disponible para cuentas nuevas de Gemini.
+- **Fix**: se cambió el modelo de `gemini-2.5-flash` a `gemini-3.6-flash`
+  (el que el propio error de Google recomendó) en `vision.py` y `minuta.py`.
+- Pendiente: reintentar `/read-photo` con el modelo actualizado.
+
+**Nota sobre cómo se aplican estas correcciones**: Claude no tiene acceso
+directo a los archivos de la PC de Miguel — cada fix a `requirements.txt` se
+prueba en un entorno de pruebas aparte y se le indica el cambio exacto para
+aplicar localmente. Cuando todo quede validado end-to-end, se hace `git push`
+del repo local de Miguel a GitHub para que ambas copias queden alineadas.
+
 ## Cómo levantar el servicio localmente
 ```
 cd python-service

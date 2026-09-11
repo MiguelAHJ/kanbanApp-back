@@ -6,15 +6,22 @@ python-dotenv==1.0.1
 pydantic==2.10.4
 
 # --- Transcripcion de audio ---
-faster-whisper==1.1.0
+faster-whisper==1.1.1
 # RealtimeSTT envuelve faster-whisper + VAD para escucha en vivo (requiere microfono real -> solo en tu PC)
 RealtimeSTT==0.3.104
 
 # --- Lectura de fotos (vision) ---
 Pillow==11.0.0
-ollama==0.4.4          # cliente para modelo local via Ollama
+ollama==0.6.2           # cliente para modelo local via Ollama (subido de 0.4.4: exigia httpx<0.28, chocaba con google-genai)
 google-genai==1.75.0    # cliente para Gemini API (free tier) - SDK actual, reemplaza al deprecado google-generativeai
 
-# --- Base de datos ---
-sqlalchemy==2.0.36
-psycopg2-binary==2.9.10
+# --- Cliente HTTP para scripts de prueba manual (tests/manual_test_*.py) ---
+httpx>=0.28.1
+
+# --- Base de datos (se instalan cuando conectemos persistencia) ---
+# En Windows con Python 3.14, psycopg2-binary aun no publica wheel precompilado
+# y falla al compilar (necesita pg_config). Descomentar cuando se implemente
+# la capa de base de datos, revisando entonces si ya hay wheel disponible o
+# si conviene usar psycopg[binary] (psycopg3) en su lugar.
+# sqlalchemy==2.0.36
+# psycopg2-binary==2.9.10
