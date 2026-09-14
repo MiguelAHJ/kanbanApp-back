@@ -1,0 +1,19 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Inicio", "x": 0, "y": 0, "w": 1440, "h": 900 },
+    { "file": "Reunion.dc.html", "title": "Nueva reunión (grabando)", "x": 1560, "y": 0, "w": 1440, "h": 900 },
+    { "file": "Minuta.dc.html", "title": "Revisión de minuta", "x": 3120, "y": 0, "w": 1440, "h": 900 },
+    { "file": "Tablero.dc.html", "title": "Tablero", "x": 0, "y": 1040, "w": 1440, "h": 900 },
+    { "file": "Reportes.dc.html", "title": "Reportes", "x": 1560, "y": 1040, "w": 1440, "h": 900 },
+    { "file": "Login.dc.html", "title": "Inicio de sesión", "x": 3120, "y": 1040, "w": 1440, "h": 900 },
+    { "file": "IssueRapido.dc.html", "title": "Issue rápido (popup)", "x": 0, "y": 2080, "w": 760, "h": 560 },
+    { "file": "InicioClaro.dc.html", "title": "Alternativa — tema claro", "x": 1560, "y": 2080, "w": 1440, "h": 900 }
+  ],
+  "annotations": [
+    { "id": "flujo", "x": 0, "y": -170, "w": 720, "text": "Flujo principal (fila 1): Inicio → Nueva reunión → Revisión de minuta → issues en GitLab.\nAudio, fotos y notas escritas son opcionales y combinables. Nada se publica en GitLab sin pasar por “Por revisar”." },
+    { "id": "direccion", "x": 1560, "y": -170, "w": 640, "text": "Dirección: base oscura tipo tinta + tarjetas de acento pastel (coral, ámbar, lavanda, menta), layout bento, rail de iconos. Tipografía: Sora (títulos) + DM Sans (texto)." },
+    { "id": "claro", "x": 1560, "y": 1920, "w": 520, "text": "Alternativa: misma pantalla de Inicio en tema claro (crema). Mismos acentos. Sirve para decidir si la app tiene modo claro/oscuro o solo uno." },
+    { "id": "popup", "x": 0, "y": 1920, "w": 520, "text": "Issue rápido: ventana flotante que se abre con un atajo global aunque la app esté minimizada. Texto o dictado; va a la cola de revisión, no directo a GitLab." }
+  ],
+  "launch": { "view": "canvas" }
+}

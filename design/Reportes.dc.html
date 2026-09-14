@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap">
+  <style>
+
+      :root {
+        --bg: #0e1014; --surface: #161920; --surface-2: #1d212a; --surface-3: #262b36;
+        --line: rgba(255,255,255,0.07); --line-strong: rgba(255,255,255,0.14);
+        --ink: #f3f4f6; --ink-2: #a3a9b6; --ink-3: #6b7280;
+        --coral: #F7907F; --amber: #F3C56B; --lavender: #BDA9F7; --mint: #8EDBB9; --sky: #8CC8F2;
+        --on-tile: #15171c;
+        --shadow: 0 24px 60px rgba(0,0,0,0.45);
+      }
+
+
+      body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+      a { color: var(--coral); text-decoration: none; } a:hover { color: var(--amber); }
+      h1, h2, h3, .display { font-family: 'Sora', 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.02em; margin: 0; }
+      * { box-sizing: border-box; }
+      .rail-btn { width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--ink-3); }
+      .rail-btn.active { background: var(--ink); color: var(--bg); }
+      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; }
+      .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line); white-space: nowrap; }
+      .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 14px; font-weight: 600; font-size: 14px; border: 1px solid transparent; white-space: nowrap; }
+      .btn-primary { background: var(--coral); color: var(--on-tile); }
+      .btn-ghost { background: transparent; color: var(--ink-2); border-color: var(--line-strong); }
+      .btn-ink { background: var(--ink); color: var(--bg); }
+      .avatar { width: 30px; height: 30px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--on-tile); border: 2px solid var(--surface); }
+      .dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+      .muted { color: var(--ink-2); } .faint { color: var(--ink-3); }
+      .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+      @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      .reveal { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+      .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.12s; } .d3 { animation-delay: 0.19s; } .d4 { animation-delay: 0.26s; } .d5 { animation-delay: 0.33s; } .d6 { animation-delay: 0.4s; }
+      @keyframes wave { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+      .wave-bar { flex: 1; min-width: 3px; max-width: 6px; border-radius: 4px; background: var(--on-tile); transform-origin: center; animation: wave 1.1s ease-in-out infinite; }
+      @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(247,144,127,0.45); } 100% { box-shadow: 0 0 0 18px rgba(247,144,127,0); } }
+      .pulse { animation: pulse 1.6s ease-out infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+      .caret { display: inline-block; width: 2px; height: 16px; background: var(--coral); vertical-align: -3px; margin-left: 2px; animation: blink 1s step-end infinite; }
+
+
+  </style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; overflow: hidden; background: var(--bg); color: var(--ink); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;">
+
+
+  <aside style="width: 84px; height: 100%; display: flex; flex-direction: column; align-items: center; padding: 22px 0; gap: 10px; border-right: 1px solid var(--line); background: var(--surface); flex-shrink: 0;">
+    <div style="margin-bottom: 18px;"><svg width="34" height="34" viewBox="0 0 32 32" style="flex-shrink: 0;"><rect x="2" y="2" width="28" height="28" rx="9" fill="#F7907F"/><path d="M9 16h3.5l2-5.5 3 11 2-5.5H23" stroke="#15171c" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;"><div class="rail-btn" title="Inicio"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="rail-btn" title="Reuniones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div><div class="rail-btn" title="Tablero"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="10" y="3" width="5" height="12" rx="1.5"/><rect x="17" y="3" width="4" height="8" rx="1.5"/></svg></div><div class="rail-btn active" title="Reportes"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div></div>
+    <div style="flex-grow: 1;"></div>
+    <div class="rail-btn" title="Ajustes"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
+    <div class="avatar" style="width: 40px; height: 40px; background: var(--lavender); font-size: 13px; margin-top: 6px;">MH</div>
+  </aside>
+  <main style="flex-grow: 1; padding: 34px 40px; display: flex; flex-direction: column; gap: 22px; min-width: 0;">
+    
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;">
+      <div>
+        <h1 style="font-size: 38px; font-weight: 600; line-height: 1.1;">Reportes</h1>
+        <div class="muted" style="font-size: 15px; margin-top: 6px;">Qué se hizo, quién lo hizo y de dónde salió</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;"><div style="display: flex; gap: 2px; padding: 4px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line);"><span style="padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--ink-2);">Hoy</span><span style="padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 500; background: var(--ink); color: var(--bg);">Semana</span><span style="padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--ink-2);">Mes</span><span style="padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--ink-2);">Rango</span></div><span class="chip" style="height: 44px; padding: 0 14px; font-size: 13px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>1 – 11 sep 2026</span><div class="btn btn-ink"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exportar</div></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;">
+      
+      <div class="card reveal d1" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;">
+        <div class="eyebrow">Issues cerrados</div>
+        <div style="font-size: 34px; font-weight: 600; line-height: 1;">27</div>
+        <div style="font-size: 12.5px;"><span style="font-weight: 600; color: var(--mint);">+6</span> <span class="faint">vs. periodo anterior</span></div>
+      </div>
+      
+      <div class="card reveal d2" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;">
+        <div class="eyebrow">Issues creados</div>
+        <div style="font-size: 34px; font-weight: 600; line-height: 1;">34</div>
+        <div style="font-size: 12.5px;"><span style="font-weight: 600; color: var(--mint);">+9</span> <span class="faint">vs. periodo anterior</span></div>
+      </div>
+      
+      <div class="card reveal d3" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;">
+        <div class="eyebrow">Tiempo medio en progreso</div>
+        <div style="font-size: 34px; font-weight: 600; line-height: 1;">2.3 d</div>
+        <div style="font-size: 12.5px;"><span style="font-weight: 600; color: var(--mint);">−0.6 d</span> <span class="faint">vs. periodo anterior</span></div>
+      </div>
+      
+      <div class="card reveal d4" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;">
+        <div class="eyebrow">Reuniones con minuta</div>
+        <div style="font-size: 34px; font-weight: 600; line-height: 1;">6</div>
+        <div style="font-size: 12.5px;"><span style="font-weight: 600; color: var(--mint);">+2</span> <span class="faint">vs. periodo anterior</span></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; flex-grow: 1; min-height: 0;">
+      <div class="card reveal d4" style="padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <h2 style="font-size: 17px; font-weight: 600;">Issues cerrados por día</h2>
+          <span class="faint" style="font-size: 12.5px;">septiembre</span>
+        </div>
+        <div style="display: flex; gap: 22px; margin-top: 4px; font-size: 13px;" class="muted"><span><b style="color: var(--ink);">2.5</b> por día en promedio</span><span>Mejor día: <b style="color: var(--ink);">5 sep</b></span><span>Sin cierres: <b style="color: var(--ink);">fin de semana</b></span></div>
+        <div style="flex-grow: 1;"></div>
+        <div style="display: flex; align-items: stretch; gap: 8px; border-bottom: 1px solid var(--line-strong); height: 340px;"><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 112px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 224px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 56px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 168px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="font-size: 12px; font-weight: 600; margin-bottom: 6px;">5</div><div style="width: 22px; height: 280px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 2px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 2px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 168px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 112px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 224px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;"><div style="height: 22px;"></div><div style="width: 22px; height: 168px; background: var(--mint); border-radius: 4px 4px 0 0;"></div></div></div>
+        <div style="display: flex; gap: 8px; margin-top: 8px;"><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">1</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">2</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">3</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">4</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">5</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">6</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">7</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">8</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">9</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">10</div><div class="faint" style="flex: 1; text-align: center; font-size: 11px;">11</div></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px; min-height: 0;">
+        <div class="card reveal d5" style="padding: 22px 24px; flex-grow: 1;">
+          <h2 style="font-size: 17px; font-weight: 600;">Por persona</h2>
+          <div style="margin-top: 6px;">
+            
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line);">
+          <div class="avatar" style="background: var(--lavender);">MH</div>
+          <div style="width: 150px; font-weight: 500;">Miguel Hernández</div>
+          <div style="flex-grow: 1; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden;"><div style="width: 100%; height: 100%; background: var(--mint); border-radius: 4px;"></div></div>
+          <div style="width: 84px; text-align: right; white-space: nowrap;"><b>11</b> <span class="faint">cerrados</span></div>
+          <div style="width: 84px; text-align: right; white-space: nowrap;"><b>2</b> <span class="faint">en curso</span></div>
+        </div>
+            
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line);">
+          <div class="avatar" style="background: var(--mint);">AR</div>
+          <div style="width: 150px; font-weight: 500;">Andrea Rojas</div>
+          <div style="flex-grow: 1; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden;"><div style="width: 82%; height: 100%; background: var(--mint); border-radius: 4px;"></div></div>
+          <div style="width: 84px; text-align: right; white-space: nowrap;"><b>9</b> <span class="faint">cerrados</span></div>
+          <div style="width: 84px; text-align: right; white-space: nowrap;"><b>3</b> <span class="faint">en curso</span></div>
+        </div>
+            
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line);">
+          <div class="avatar" style="background: var(--amber);">LP</div>
+          <div style="width: 150px; font-weight: 500;">Luis Pérez</div>
+          <div style="flex-grow: 1; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden;"><div style="width: 64%; height: 100%; background: var(--mint); border-radius: 4px;"></div></div>
+          <div style="width: 84px; text-align: right; white-space: nowrap;"><b>7</b> <span class="faint">cerrados</span></div>
+          <div style="width: 84px; text-align: right; white-space: nowrap;"><b>1</b> <span class="faint">en curso</span></div>
+        </div>
+          </div>
+          <h2 style="font-size: 17px; font-weight: 600; margin-top: 22px;">Por proyecto</h2>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;"><span class="chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>infra-ci</span><div style="flex-grow: 1; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden;"><div style="width: 100%; height: 100%; background: var(--mint); border-radius: 4px;"></div></div><span style="width: 84px; text-align: right; white-space: nowrap;"><b>14</b> <span class="faint">cerrados</span></span></div>
+            <div style="display: flex; align-items: center; gap: 12px;"><span class="chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>pagos-core</span><div style="flex-grow: 1; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden;"><div style="width: 64%; height: 100%; background: var(--mint); border-radius: 4px;"></div></div><span style="width: 84px; text-align: right; white-space: nowrap;"><b>9</b> <span class="faint">cerrados</span></span></div>
+            <div style="display: flex; align-items: center; gap: 12px;"><span class="chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>app-mobile</span><div style="flex-grow: 1; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden;"><div style="width: 29%; height: 100%; background: var(--mint); border-radius: 4px;"></div></div><span style="width: 84px; text-align: right; white-space: nowrap;"><b>4</b> <span class="faint">cerrados</span></span></div>
+          </div>
+        </div>
+        <div class="card reveal d6" style="padding: 22px 24px; display: flex; gap: 14px; align-items: center;">
+          <div style="flex-grow: 1;">
+            <div class="eyebrow">Origen de los issues</div>
+            <div style="display: flex; gap: 14px; margin-top: 10px; font-size: 13px;">
+              <span style="display: inline-flex; align-items: center; gap: 6px;"><span class="dot" style="background: var(--coral);"></span>Reunión <b>21</b></span>
+              <span style="display: inline-flex; align-items: center; gap: 6px;"><span class="dot" style="background: var(--amber);"></span>Rápido <b>13</b></span>
+            </div>
+          </div>
+          <div style="display: flex; width: 160px; height: 10px; border-radius: 5px; overflow: hidden; gap: 2px;"><div style="width: 62%; background: var(--coral);"></div><div style="flex-grow: 1; background: var(--amber);"></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

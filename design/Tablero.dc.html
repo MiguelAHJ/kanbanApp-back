@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap">
+  <style>
+
+      :root {
+        --bg: #0e1014; --surface: #161920; --surface-2: #1d212a; --surface-3: #262b36;
+        --line: rgba(255,255,255,0.07); --line-strong: rgba(255,255,255,0.14);
+        --ink: #f3f4f6; --ink-2: #a3a9b6; --ink-3: #6b7280;
+        --coral: #F7907F; --amber: #F3C56B; --lavender: #BDA9F7; --mint: #8EDBB9; --sky: #8CC8F2;
+        --on-tile: #15171c;
+        --shadow: 0 24px 60px rgba(0,0,0,0.45);
+      }
+
+
+      body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+      a { color: var(--coral); text-decoration: none; } a:hover { color: var(--amber); }
+      h1, h2, h3, .display { font-family: 'Sora', 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.02em; margin: 0; }
+      * { box-sizing: border-box; }
+      .rail-btn { width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--ink-3); }
+      .rail-btn.active { background: var(--ink); color: var(--bg); }
+      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; }
+      .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line); white-space: nowrap; }
+      .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 14px; font-weight: 600; font-size: 14px; border: 1px solid transparent; white-space: nowrap; }
+      .btn-primary { background: var(--coral); color: var(--on-tile); }
+      .btn-ghost { background: transparent; color: var(--ink-2); border-color: var(--line-strong); }
+      .btn-ink { background: var(--ink); color: var(--bg); }
+      .avatar { width: 30px; height: 30px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--on-tile); border: 2px solid var(--surface); }
+      .dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+      .muted { color: var(--ink-2); } .faint { color: var(--ink-3); }
+      .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+      @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      .reveal { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+      .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.12s; } .d3 { animation-delay: 0.19s; } .d4 { animation-delay: 0.26s; } .d5 { animation-delay: 0.33s; } .d6 { animation-delay: 0.4s; }
+      @keyframes wave { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+      .wave-bar { flex: 1; min-width: 3px; max-width: 6px; border-radius: 4px; background: var(--on-tile); transform-origin: center; animation: wave 1.1s ease-in-out infinite; }
+      @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(247,144,127,0.45); } 100% { box-shadow: 0 0 0 18px rgba(247,144,127,0); } }
+      .pulse { animation: pulse 1.6s ease-out infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+      .caret { display: inline-block; width: 2px; height: 16px; background: var(--coral); vertical-align: -3px; margin-left: 2px; animation: blink 1s step-end infinite; }
+
+
+  </style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; overflow: hidden; background: var(--bg); color: var(--ink); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;">
+
+
+  <aside style="width: 84px; height: 100%; display: flex; flex-direction: column; align-items: center; padding: 22px 0; gap: 10px; border-right: 1px solid var(--line); background: var(--surface); flex-shrink: 0;">
+    <div style="margin-bottom: 18px;"><svg width="34" height="34" viewBox="0 0 32 32" style="flex-shrink: 0;"><rect x="2" y="2" width="28" height="28" rx="9" fill="#F7907F"/><path d="M9 16h3.5l2-5.5 3 11 2-5.5H23" stroke="#15171c" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;"><div class="rail-btn" title="Inicio"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="rail-btn" title="Reuniones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div><div class="rail-btn active" title="Tablero"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="10" y="3" width="5" height="12" rx="1.5"/><rect x="17" y="3" width="4" height="8" rx="1.5"/></svg></div><div class="rail-btn" title="Reportes"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div></div>
+    <div style="flex-grow: 1;"></div>
+    <div class="rail-btn" title="Ajustes"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
+    <div class="avatar" style="width: 40px; height: 40px; background: var(--lavender); font-size: 13px; margin-top: 6px;">MH</div>
+  </aside>
+  <main style="flex-grow: 1; padding: 34px 40px; display: flex; flex-direction: column; gap: 22px; min-width: 0;">
+    
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;">
+      <div>
+        <h1 style="font-size: 38px; font-weight: 600; line-height: 1.1;">Tablero</h1>
+        
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;"><div style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); color: var(--ink-3); width: 290px; white-space: nowrap;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Buscar issues, reuniones…</span><span style="margin-left: auto; font-size: 11px; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line-strong);">⌘K</span></div><div class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15171c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nuevo issue</div></div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="chip" style="height: 36px; padding: 0 14px; font-size: 13px; background: var(--ink); color: var(--bg); border-color: transparent;">Todos</span><span class="chip" style="height: 36px; padding: 0 14px; font-size: 13px; ">pagos-core</span><span class="chip" style="height: 36px; padding: 0 14px; font-size: 13px; ">infra-ci</span><span class="chip" style="height: 36px; padding: 0 14px; font-size: 13px; ">app-mobile</span>
+      <div style="flex-grow: 1;"></div>
+      <span class="chip" style="height: 36px; padding: 0 14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Todos<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polyline points="6 9 12 15 18 9"/></svg></span>
+      <span class="chip" style="height: 36px; padding: 0 14px;">Sincronizado con GitLab · hace 1 min</span>
+    </div>
+    <div class="reveal d1" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; flex-grow: 1; min-height: 0;">
+      
+        <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px;">
+            <span class="dot" style="background: var(--ink-3);"></span>
+            <span style="font-weight: 600; font-size: 14px;">Por hacer</span>
+            <span class="chip" style="padding: 2px 8px; font-size: 11.5px;">4</span>
+            <div style="flex-grow: 1;"></div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border-radius: 22px; background: var(--surface-2); border: 1px solid var(--line); flex-grow: 1; min-height: 0;">
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Cachear dependencias de Flutter en el pipeline</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--lavender); width: 6px; height: 6px;"></span>mejora</span><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--sky); width: 6px; height: 6px;"></span>infra-ci</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Reunión 11 sep</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">hoy</span>
+              <div class="avatar" style="background: var(--lavender);">MH</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Documentar variables de entorno del release</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--sky); width: 6px; height: 6px;"></span>tarea</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Reunión 11 sep</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">hoy</span>
+              <div class="avatar" style="background: var(--amber);">LP</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Alerta cuando un runner se queda sin disco</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--lavender); width: 6px; height: 6px;"></span>mejora</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Rápido</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">2d</span>
+              <div class="avatar" style="background: var(--mint);">AR</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Revisar permisos del token de deploy</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--sky); width: 6px; height: 6px;"></span>tarea</span><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--coral); width: 6px; height: 6px;"></span>seguridad</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Rápido</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">3d</span>
+              <div class="avatar" style="background: var(--lavender);">MH</div>
+            </div>
+          </div></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px;">
+            <span class="dot" style="background: var(--amber);"></span>
+            <span style="font-weight: 600; font-size: 14px;">En progreso</span>
+            <span class="chip" style="padding: 2px 8px; font-size: 11.5px;">3</span>
+            <div style="flex-grow: 1;"></div><span class="faint" style="font-size: 12px;">WIP 4</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border-radius: 22px; background: var(--surface-2); border: 1px solid var(--line); flex-grow: 1; min-height: 0;">
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; transform: rotate(-1.5deg) translateY(-4px); box-shadow: var(--shadow); border-color: var(--line-strong);">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Mover runners de staging a los nodos nuevos</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--sky); width: 6px; height: 6px;"></span>tarea</span><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--sky); width: 6px; height: 6px;"></span>infra-ci</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Reunión 11 sep</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">1d</span>
+              <div class="avatar" style="background: var(--lavender);">MH</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Pantalla de login de la app móvil</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--mint); width: 6px; height: 6px;"></span>feature</span><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--lavender); width: 6px; height: 6px;"></span>app-mobile</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Reunión 8 sep</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">4d</span>
+              <div class="avatar" style="background: var(--mint);">AR</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Migrar secretos a variables protegidas</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--coral); width: 6px; height: 6px;"></span>seguridad</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Rápido</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">2d</span>
+              <div class="avatar" style="background: var(--amber);">LP</div>
+            </div>
+          </div></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px;">
+            <span class="dot" style="background: var(--sky);"></span>
+            <span style="font-weight: 600; font-size: 14px;">En revisión</span>
+            <span class="chip" style="padding: 2px 8px; font-size: 11.5px;">2</span>
+            <div style="flex-grow: 1;"></div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border-radius: 22px; background: var(--surface-2); border: 1px solid var(--line); flex-grow: 1; min-height: 0;">
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">El job de deploy no falla cuando la migración rompe</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--coral); width: 6px; height: 6px;"></span>bug</span><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--sky); width: 6px; height: 6px;"></span>pagos-core</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Reunión 11 sep</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">6h</span>
+              <div class="avatar" style="background: var(--mint);">AR</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Limpiar imágenes viejas del registry</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--lavender); width: 6px; height: 6px;"></span>mejora</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Rápido</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">1d</span>
+              <div class="avatar" style="background: var(--lavender);">MH</div>
+            </div>
+          </div></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 0 6px;">
+            <span class="dot" style="background: var(--mint);"></span>
+            <span style="font-weight: 600; font-size: 14px;">Hecho</span>
+            <span class="chip" style="padding: 2px 8px; font-size: 11.5px;">8</span>
+            <div style="flex-grow: 1;"></div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border-radius: 22px; background: var(--surface-2); border: 1px solid var(--line); flex-grow: 1; min-height: 0;">
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Pipeline de release con aprobación manual</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--mint); width: 6px; height: 6px;"></span>feature</span><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--sky); width: 6px; height: 6px;"></span>infra-ci</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Reunión 1 sep</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">cerrado ayer</span>
+              <div class="avatar" style="background: var(--lavender);">MH</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; ">
+            <div style="font-weight: 600; font-size: 14px; line-height: 1.4;">Notificar a Slack cuando falla main</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;"><span class="chip" style="padding: 3px 8px; font-size: 11px;"><span class="dot" style="background: var(--lavender); width: 6px; height: 6px;"></span>mejora</span></div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span class="faint" style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Rápido</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="faint" style="font-size: 11.5px;">cerrado mar</span>
+              <div class="avatar" style="background: var(--amber);">LP</div>
+            </div>
+          </div><div class="faint" style="text-align: center; font-size: 12.5px; padding: 8px;">+ 6 más esta semana</div></div>
+        </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

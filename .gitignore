@@ -9,7 +9,13 @@ venv/
 *.jpg
 *.jpeg
 *.png
+# contenido real de reuniones: nunca al repo
+python-service/tests/samples/*
 !python-service/tests/samples/.gitkeep
 python-service/models/
 postgres-data/
 *.db
+
+# Diseño (canvas generado y capturas — pesados, se regeneran)
+design/issueflow-desktop.html
+design/shots/

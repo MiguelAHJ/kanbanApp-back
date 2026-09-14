@@ -12,6 +12,7 @@ Dos usos distintos:
 """
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import Callable
@@ -19,6 +20,32 @@ from typing import Callable
 from faster_whisper import WhisperModel
 
 from .config import settings
+
+# Ruido de huggingface_hub en Windows (no soporta symlinks sin modo desarrollador);
+# la cache funciona igual, solo ocupa algo mas de disco.
+os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
+
+
+def _ensure_silero_trusted():
+    """
+    RealtimeSTT carga el detector de voz Silero VAD con torch.hub.load() sin
+    trust_repo=True; la primera vez torch pide confirmacion interactiva
+    ("Do you trust this repository? y/N") y, si nadie responde, la carga
+    falla y la escucha nunca arranca. Cargarlo aqui una vez con
+    trust_repo=True lo deja en la lista de confiables (~/.cache/torch/hub)
+    y descargado en cache, asi RealtimeSTT ya no pregunta.
+    """
+    try:
+        import torch
+
+        torch.hub.load(
+            repo_or_dir="snakers4/silero-vad",
+            model="silero_vad",
+            trust_repo=True,
+            verbose=False,
+        )
+    except Exception as exc:  # no bloquear: si falla, RealtimeSTT lo intentara igual
+        print(f"[transcription] aviso: no se pudo pre-cargar Silero VAD: {exc}")
 
 
 @dataclass
@@ -71,46 +98,66 @@ def transcribe_file(audio_path: str) -> TranscriptionResult:
 class LiveTranscriber:
     """
     Envoltorio sobre RealtimeSTT para escuchar el microfono en vivo durante
-    una reunion presencial y recibir texto a medida que se habla.
+    una reunion presencial y recibir texto a medida que se habla. No guarda
+    audio: cada frase detectada se transcribe y se descarta el sonido.
 
-    Uso previsto (en tu PC, con microfono real):
+    Uso (en una maquina con microfono real):
 
         def on_new_text(text: str):
             print("Nuevo fragmento:", text)
 
         live = LiveTranscriber(on_text=on_new_text)
-        live.start()
+        live.listen()          # bloquea: escucha y transcribe frase a frase
         ...
-        live.stop()  # devuelve la transcripcion completa acumulada
+        live.stop()            # devuelve la transcripcion completa acumulada
 
-    NOTA: no se puede instanciar/probar en este sandbox (sin microfono).
-    Se deja implementado y documentado para probarlo en tu PC.
+    IMPORTANTE en Windows: RealtimeSTT lanza un proceso aparte para el
+    modelo, asi que el script que lo use debe tener su codigo dentro de
+    `if __name__ == "__main__":` (ver tests/manual_test_live.py). En el
+    servicio real, listen() correra en un thread propio.
     """
 
-    def __init__(self, on_text: Callable[[str], None] | None = None):
+    def __init__(self, on_text: Callable[[str], None] | None = None, debug: bool = False):
         self._on_text = on_text
+        self._debug = debug
         self._recorder = None
+        self._running = False
         self._full_text_parts: list[str] = []
 
-    def start(self):
+    def listen(self):
         from RealtimeSTT import AudioToTextRecorder
 
-        def _handle_text(text: str):
-            self._full_text_parts.append(text)
-            if self._on_text:
-                self._on_text(text)
+        import logging
 
+        _ensure_silero_trusted()
         self._recorder = AudioToTextRecorder(
             language=settings.WHISPER_LANGUAGE,
             model=settings.WHISPER_MODEL_SIZE,
+            device="cpu",
+            compute_type="int8",
             spinner=False,
+            level=logging.DEBUG if self._debug else logging.WARNING,
         )
-        # RealtimeSTT corre su propio loop; text() bloquea hasta detectar
-        # una frase completa. En el servicio real esto corre en un thread
-        # aparte para no bloquear el resto de la app.
-        self._recorder.text(_handle_text)
+        self._running = True
+        # text() bloquea hasta que el VAD detecta que una frase termino y
+        # devuelve su transcripcion; se repite mientras la sesion siga activa.
+        while self._running:
+            text = self._recorder.text()
+            if text and text.strip():
+                self._full_text_parts.append(text.strip())
+                if self._on_text:
+                    self._on_text(text.strip())
+
+    # alias para compatibilidad con la version anterior
+    start = listen
 
     def stop(self) -> str:
+        self._running = False
         if self._recorder:
-            self._recorder.shutdown()
+            try:
+                self._recorder.shutdown()
+            except Exception:
+                # Si el grabador nunca termino de iniciar (p. ej. fallo el VAD),
+                # shutdown() puede quejarse de un proceso/handle inexistente.
+                pass
         return " ".join(self._full_text_parts).strip()

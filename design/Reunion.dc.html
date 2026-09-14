@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap">
+  <style>
+
+      :root {
+        --bg: #0e1014; --surface: #161920; --surface-2: #1d212a; --surface-3: #262b36;
+        --line: rgba(255,255,255,0.07); --line-strong: rgba(255,255,255,0.14);
+        --ink: #f3f4f6; --ink-2: #a3a9b6; --ink-3: #6b7280;
+        --coral: #F7907F; --amber: #F3C56B; --lavender: #BDA9F7; --mint: #8EDBB9; --sky: #8CC8F2;
+        --on-tile: #15171c;
+        --shadow: 0 24px 60px rgba(0,0,0,0.45);
+      }
+
+
+      body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+      a { color: var(--coral); text-decoration: none; } a:hover { color: var(--amber); }
+      h1, h2, h3, .display { font-family: 'Sora', 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.02em; margin: 0; }
+      * { box-sizing: border-box; }
+      .rail-btn { width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--ink-3); }
+      .rail-btn.active { background: var(--ink); color: var(--bg); }
+      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; }
+      .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line); white-space: nowrap; }
+      .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 14px; font-weight: 600; font-size: 14px; border: 1px solid transparent; white-space: nowrap; }
+      .btn-primary { background: var(--coral); color: var(--on-tile); }
+      .btn-ghost { background: transparent; color: var(--ink-2); border-color: var(--line-strong); }
+      .btn-ink { background: var(--ink); color: var(--bg); }
+      .avatar { width: 30px; height: 30px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--on-tile); border: 2px solid var(--surface); }
+      .dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+      .muted { color: var(--ink-2); } .faint { color: var(--ink-3); }
+      .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+      @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      .reveal { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+      .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.12s; } .d3 { animation-delay: 0.19s; } .d4 { animation-delay: 0.26s; } .d5 { animation-delay: 0.33s; } .d6 { animation-delay: 0.4s; }
+      @keyframes wave { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+      .wave-bar { flex: 1; min-width: 3px; max-width: 6px; border-radius: 4px; background: var(--on-tile); transform-origin: center; animation: wave 1.1s ease-in-out infinite; }
+      @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(247,144,127,0.45); } 100% { box-shadow: 0 0 0 18px rgba(247,144,127,0); } }
+      .pulse { animation: pulse 1.6s ease-out infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+      .caret { display: inline-block; width: 2px; height: 16px; background: var(--coral); vertical-align: -3px; margin-left: 2px; animation: blink 1s step-end infinite; }
+
+
+  </style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; overflow: hidden; background: var(--bg); color: var(--ink); font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;">
+
+
+  <aside style="width: 84px; height: 100%; display: flex; flex-direction: column; align-items: center; padding: 22px 0; gap: 10px; border-right: 1px solid var(--line); background: var(--surface); flex-shrink: 0;">
+    <div style="margin-bottom: 18px;"><svg width="34" height="34" viewBox="0 0 32 32" style="flex-shrink: 0;"><rect x="2" y="2" width="28" height="28" rx="9" fill="#F7907F"/><path d="M9 16h3.5l2-5.5 3 11 2-5.5H23" stroke="#15171c" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;"><div class="rail-btn" title="Inicio"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="rail-btn active" title="Reuniones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div><div class="rail-btn" title="Tablero"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="10" y="3" width="5" height="12" rx="1.5"/><rect x="17" y="3" width="4" height="8" rx="1.5"/></svg></div><div class="rail-btn" title="Reportes"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div></div>
+    <div style="flex-grow: 1;"></div>
+    <div class="rail-btn" title="Ajustes"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
+    <div class="avatar" style="width: 40px; height: 40px; background: var(--lavender); font-size: 13px; margin-top: 6px;">MH</div>
+  </aside>
+  <main style="flex-grow: 1; padding: 34px 40px; display: flex; flex-direction: column; gap: 22px; min-width: 0;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div class="rail-btn" style="width: 40px; height: 40px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); color: var(--ink-2);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></div>
+      <span class="faint" style="font-size: 13px;">Reuniones / Nueva reunión</span>
+      <div style="flex-grow: 1;"></div>
+      <span class="chip"><span class="dot pulse" style="background: var(--coral);"></span>Grabando · 12:34</span>
+    </div>
+
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;">
+      <div style="flex-grow: 1;">
+        <div class="eyebrow">Título de la reunión</div>
+        <h1 style="font-size: 36px; font-weight: 600; line-height: 1.1; margin-top: 8px; border-bottom: 2px solid var(--line-strong); padding-bottom: 8px; display: inline-block; min-width: 620px;">Sync semanal — Plataforma de pagos<span class="caret"></span></h1>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <span class="chip" style="height: 40px; padding: 0 14px; font-size: 13px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>pagos-core<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polyline points="6 9 12 15 18 9"/></svg></span>
+        <div style="display: flex; align-items: center;"><div class="avatar" style="background: var(--lavender);">MH</div><span style="margin-left: -8px;"><div class="avatar" style="background: var(--mint);">AR</div></span><span style="margin-left: -8px;"><div class="avatar" style="background: var(--amber);">LP</div></span><span class="chip" style="margin-left: 6px; height: 30px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; flex-grow: 1; min-height: 0;">
+
+      <div class="card reveal d1" style="padding: 0; display: flex; flex-direction: column; overflow: hidden;">
+        <div style="background: var(--coral); color: var(--on-tile); padding: 22px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15171c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Audio</div>
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.06em; opacity: 0.7;">OPCIONAL</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 5px; height: 60px;"><div class="wave-bar" style="height: 18px; animation-delay: 0.00s;"></div><div class="wave-bar" style="height: 30px; animation-delay: 0.09s;"></div><div class="wave-bar" style="height: 44px; animation-delay: 0.18s;"></div><div class="wave-bar" style="height: 26px; animation-delay: 0.27s;"></div><div class="wave-bar" style="height: 52px; animation-delay: 0.36s;"></div><div class="wave-bar" style="height: 34px; animation-delay: 0.45s;"></div><div class="wave-bar" style="height: 20px; animation-delay: 0.54s;"></div><div class="wave-bar" style="height: 40px; animation-delay: 0.63s;"></div><div class="wave-bar" style="height: 56px; animation-delay: 0.72s;"></div><div class="wave-bar" style="height: 30px; animation-delay: 0.81s;"></div><div class="wave-bar" style="height: 22px; animation-delay: 0.90s;"></div><div class="wave-bar" style="height: 46px; animation-delay: 0.99s;"></div><div class="wave-bar" style="height: 28px; animation-delay: 1.08s;"></div><div class="wave-bar" style="height: 38px; animation-delay: 1.17s;"></div><div class="wave-bar" style="height: 18px; animation-delay: 1.26s;"></div><div class="wave-bar" style="height: 32px; animation-delay: 1.35s;"></div><div class="wave-bar" style="height: 48px; animation-delay: 1.44s;"></div><div class="wave-bar" style="height: 24px; animation-delay: 1.53s;"></div></div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 52px; height: 52px; border-radius: 999px; background: var(--on-tile); display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F7907F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><rect x="6" y="6" width="12" height="12" rx="2"/></svg></div>
+            <div><div class="display" style="font-size: 24px; font-weight: 600; letter-spacing: 0;">12:34</div><div style="font-size: 12px; opacity: 0.72;">Micrófono de la sala</div></div>
+          </div>
+        </div>
+        <div style="padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; min-height: 0;">
+          <div class="eyebrow" style="display: flex; align-items: center; gap: 8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8z"/></svg>Transcripción en vivo</div>
+          <p class="muted" style="margin: 0; font-size: 13.5px; line-height: 1.6;">…entonces el pipeline de staging debería correr en los runners nuevos a partir del lunes. Andrea revisa que las variables de entorno del release estén documentadas.</p>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.6;">Y el bug del deploy: cuando la migración falla, el job sigue en verde y nadie se entera<span class="caret"></span></p>
+        </div>
+      </div>
+
+      <div class="card reveal d2" style="padding: 22px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Fotos de notas</div>
+          <span class="eyebrow">Opcional</span>
+        </div>
+        <div style="border: 1.5px dashed var(--line-strong); border-radius: 18px; padding: 26px 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink-3); text-align: center;">
+          <div style="width: 44px; height: 44px; border-radius: 14px; background: var(--surface-2); display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          <div style="font-size: 13px;">Arrastra fotos aquí o <a>elige archivos</a></div>
+          <div style="font-size: 12px;">La IA lee la letra a mano y la cruza con el audio</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;"><div style="border-radius: 14px; background: var(--surface-3); height: 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--ink-3); border: 1px solid var(--line);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span style="font-size: 11px;">notas-1.jpg</span></div><div style="border-radius: 14px; background: var(--surface-3); height: 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--ink-3); border: 1px solid var(--line);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span style="font-size: 11px;">notas-2.jpg</span></div></div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><polyline points="20 6 9 17 4 12"/></svg>2 fotos leídas · 0 partes ilegibles</div>
+      </div>
+
+      <div class="card reveal d3" style="padding: 22px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Notas escritas</div>
+          <span class="eyebrow">Opcional</span>
+        </div>
+        <div style="flex-grow: 1; border-radius: 18px; background: var(--surface-2); border: 1px solid var(--line); padding: 16px; font-size: 14px; line-height: 1.6; color: var(--ink);">
+          <div>- Migrar runners de staging → lunes</div>
+          <div>- Andrea documenta variables del release</div>
+          <div>- Revisar por qué el deploy no falla con migraciones rotas</div>
+          <div class="faint">- <span class="caret"></span></div>
+        </div>
+        <div class="faint" style="font-size: 12.5px; line-height: 1.5;">Si nadie grabó ni tomó fotos, escribe aquí los puntos tratados. También sirve para complementar lo demás.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding-top: 4px;">
+      <span class="faint" style="font-size: 13px;">Cualquier combinación sirve: audio, fotos, texto — o ninguno.</span>
+      <div style="flex-grow: 1;"></div>
+      <div class="btn btn-ghost">Guardar borrador</div>
+      <div class="btn btn-primary">Cerrar reunión y generar minuta<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15171c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; "><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>
